@@ -515,6 +515,7 @@
   }
   .collab-row:not(:last-child){border-bottom:1px solid var(--line);}
   .collab-row img{width:100%; height:auto; border-radius:2px;}
+  .collab-img.gallery{display:flex; flex-direction:column; gap:12px;}
   @media (max-width:760px){
     .collab-row{grid-template-columns:1fr; gap:20px;}
   }
@@ -582,6 +583,13 @@
     margin-bottom:14px;
   }
   .project p.desc{color:var(--ink-soft); margin:0;}
+  .project .note{
+    margin:10px 0 0;
+    font-style:italic;
+    color:var(--ink-soft);
+    font-size:0.86rem;
+    opacity:0.85;
+  }
 
   /* ---------- Media archive ---------- */
   .archive{
@@ -1015,7 +1023,10 @@
     </div>
 
     <div class="collab-row">
-      <div class="collab-img"><img src="images/collab-palin-teahouse.webp" alt="Osamah Mousa with Michael Palin at a traditional Baghdad tea house" width="1290" height="964" loading="lazy" decoding="async"></div>
+      <div class="collab-img gallery">
+        <img src="images/collab-palin-teahouse.webp" alt="Osamah Mousa with Michael Palin at a traditional Baghdad tea house" width="1290" height="964" loading="lazy" decoding="async">
+        <img src="images/collab-palin-table.webp" alt="Osamah Mousa with Michael Palin at a restaurant table in Baghdad" width="770" height="579" loading="lazy" decoding="async">
+      </div>
       <div class="collab-text">
         <span class="role">Local Coordination &amp; Cultural Facilitation</span>
         <h3>Michael Palin</h3>
@@ -1081,6 +1092,7 @@
         <h3>A Reunion After 50 Years</h3>
         <div class="role">Documentary, Iraqi Travellers Cafe</div>
         <p class="desc">His debut short documentary, telling the remarkable story of Pan, a Dutch traveler who returned to Iraq after nearly fifty years to reunite with his Iraqi friends. Written, directed, and produced by Osamah, the film highlights the enduring power of friendship and the human stories that connect people across generations and borders.</p>
+        <p class="note">Film release forthcoming.</p>
       </div>
     </div>
 

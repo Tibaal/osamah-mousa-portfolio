@@ -519,18 +519,10 @@
   }
   .collab-row:not(:last-child){border-bottom:1px solid var(--line);}
   .collab-row img{width:100%; height:auto; border-radius:2px;}
-  .collab-img.inset{position:relative;}
-  .collab-img.inset .inset-photo{
-    position:absolute;
-    right:-14px; bottom:-14px;
-    width:40%;
-    border:4px solid var(--paper);
-    box-shadow:0 8px 20px rgba(0,0,0,0.22);
-  }
+  .collab-img.duo{display:flex; gap:12px;}
+  .collab-img.duo img{width:calc(50% - 6px);}
   @media (max-width:760px){
     .collab-row{grid-template-columns:1fr; gap:20px;}
-    .collab-img.inset{margin-bottom:14px;}
-    .collab-img.inset .inset-photo{right:-8px; bottom:-8px; width:36%;}
   }
   .collab-row.rev{grid-template-columns:1.4fr 0.9fr;}
   @media (max-width:760px){ .collab-row.rev{grid-template-columns:1fr;} }
@@ -1019,9 +1011,9 @@
     </div>
 
     <div class="collab-row">
-      <div class="collab-img inset">
+      <div class="collab-img duo">
         <img src="images/collab-palin-teahouse.webp" alt="Osamah Mousa with Michael Palin at a traditional Baghdad tea house" width="1290" height="964" loading="lazy" decoding="async">
-        <img class="inset-photo" src="images/collab-palin-table.webp" alt="Osamah Mousa with Michael Palin at a restaurant table in Baghdad" width="770" height="579" loading="lazy" decoding="async">
+        <img src="images/collab-palin-table.webp" alt="Osamah Mousa with Michael Palin at a restaurant table in Baghdad" width="770" height="579" loading="lazy" decoding="async">
       </div>
       <div class="collab-text">
         <span class="role">Local Coordination &amp; Cultural Facilitation</span>

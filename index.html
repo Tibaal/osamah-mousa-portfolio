@@ -550,13 +550,22 @@
     border-top:1px solid var(--line);
   }
   .regional-strip h4{font-size:0.95rem; margin-bottom:14px;}
-  .regional-strip .chips{display:flex; flex-wrap:wrap; gap:10px;}
+  .regional-strip .chips{
+    display:flex;
+    flex-wrap:nowrap;
+    gap:10px;
+    overflow-x:auto;
+    scrollbar-width:none;
+  }
+  .regional-strip .chips::-webkit-scrollbar{display:none;}
   .chip{
     font-family:'IBM Plex Mono', monospace;
     font-size:0.78rem;
     padding:7px 14px;
     border:1px solid var(--line);
     color:var(--ink-soft);
+    white-space:nowrap;
+    flex:0 0 auto;
   }
 
   /* ---------- Signature projects ---------- */

@@ -779,7 +779,7 @@ section.tight{padding:64px 0;}
 }
 .project p.desc{color:var(--ink-soft); margin:0;}
 .project .project-links{margin-top:18px;}
-.project .todo-note{
+.todo-note{
   margin-top:14px;
   font-family:'IBM Plex Mono', monospace;
   font-size:0.78rem;
@@ -787,6 +787,88 @@ section.tight{padding:64px 0;}
   font-style:italic;
   opacity:0.8;
 }
+
+/* ---------- Film stills gallery + lightbox ---------- */
+.film-gallery{
+  display:grid;
+  grid-template-columns:1.4fr 1fr 1fr;
+  gap:14px;
+  margin:8px 0 4px;
+}
+.film-still{
+  display:block;
+  width:100%;
+  height:420px;
+  padding:0;
+  border:none;
+  background:none;
+  cursor:pointer;
+  overflow:hidden;
+  border-radius:2px;
+}
+.film-still img{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  transition:transform 0.5s ease, filter 0.5s ease;
+}
+.film-still:hover img,
+.film-still:focus-visible img{
+  transform:scale(1.035);
+  filter:brightness(1.06);
+}
+.film-still:focus-visible{outline:2px solid var(--river-deep); outline-offset:3px;}
+@media (max-width:800px){
+  .film-gallery{
+    grid-template-columns:none;
+    grid-auto-flow:column;
+    grid-auto-columns:78vw;
+    overflow-x:auto;
+    scroll-snap-type:x proximity;
+    scrollbar-width:none;
+    padding-bottom:4px;
+  }
+  .film-gallery::-webkit-scrollbar{display:none;}
+  .film-still{height:280px; scroll-snap-align:start;}
+}
+
+.lightbox{
+  position:fixed;
+  inset:0;
+  z-index:200;
+  background:rgba(19,35,58,0.92);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding:32px;
+}
+.lightbox[hidden]{display:none;}
+.lightbox-img{
+  max-width:min(92vw, 1400px);
+  max-height:88vh;
+  width:auto;
+  height:auto;
+  object-fit:contain;
+  border-radius:2px;
+}
+.lightbox-close{
+  position:absolute;
+  top:20px; right:24px;
+  width:44px; height:44px;
+  border-radius:50%;
+  border:1px solid rgba(233,226,204,0.35);
+  background:rgba(19,35,58,0.6);
+  color:#EFE9D8;
+  font-size:1.6rem;
+  line-height:1;
+  cursor:pointer;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  transition:border-color 0.2s ease, color 0.2s ease;
+}
+.lightbox-close:hover,
+.lightbox-close:focus-visible{border-color:var(--gold-on-dark); color:var(--gold-on-dark);}
 
 /* ---------- Media archive ---------- */
 .archive{background:var(--night-2); color:#E6E0CB;}

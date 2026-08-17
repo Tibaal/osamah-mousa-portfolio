@@ -1,5 +1,39 @@
 document.documentElement.classList.add('js-ready');
 
+// Film still gallery -> lightbox
+const lightbox = document.getElementById('lightbox');
+if (lightbox) {
+  const lightboxImg = document.getElementById('lightboxImg');
+  const lightboxClose = document.getElementById('lightboxClose');
+  const stills = document.querySelectorAll('.film-still');
+  let lastTrigger = null;
+
+  function openLightbox(trigger) {
+    lastTrigger = trigger;
+    lightboxImg.src = trigger.getAttribute('data-full');
+    lightboxImg.alt = trigger.getAttribute('data-alt') || '';
+    lightbox.hidden = false;
+    document.body.style.overflow = 'hidden';
+    lightboxClose.focus();
+  }
+
+  function closeLightbox() {
+    lightbox.hidden = true;
+    lightboxImg.src = '';
+    document.body.style.overflow = '';
+    if (lastTrigger) lastTrigger.focus();
+  }
+
+  stills.forEach(btn => btn.addEventListener('click', () => openLightbox(btn)));
+  lightboxClose.addEventListener('click', closeLightbox);
+  lightbox.addEventListener('click', (e) => {
+    if (e.target === lightbox) closeLightbox();
+  });
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && !lightbox.hidden) closeLightbox();
+  });
+}
+
 // Reveal-on-scroll
 const revealEls = document.querySelectorAll('.reveal');
 const io = new IntersectionObserver((entries) => {

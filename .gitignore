@@ -1,1 +1,7 @@
 .DS_Store
+node_modules/
+
+# Local secrets — never commit real values. See .env.example for required vars.
+.env
+.env.local
+.env*.local

@@ -87,40 +87,56 @@
   <div class="wrap reveal">
     <div class="section-head">
       <h2>Start a conversation</h2>
-      <p>Fill in a few details and it will open a pre-filled email — nothing is sent automatically.</p>
+      <p>Fill in a few details and send your message directly — Osamah will reply by email. <span class="req-note">* Required</span></p>
     </div>
-    <form class="contact-form" id="contactForm">
+
+    <div id="formStatus" class="form-status" role="status" aria-live="polite"></div>
+
+    <form class="contact-form" id="contactForm" novalidate>
       <div class="form-row">
-        <label for="name">Name</label>
-        <input type="text" id="name" name="name" required>
+        <label for="name">Name <span class="req-mark" aria-hidden="true">*</span></label>
+        <input type="text" id="name" name="name" autocomplete="name" required>
       </div>
       <div class="form-row">
         <label for="organization">Organization</label>
-        <input type="text" id="organization" name="organization">
+        <input type="text" id="organization" name="organization" autocomplete="organization">
       </div>
       <div class="form-row">
-        <label for="email">Email</label>
-        <input type="email" id="email" name="email" required>
+        <label for="email">Email <span class="req-mark" aria-hidden="true">*</span></label>
+        <input type="email" id="email" name="email" autocomplete="email" required>
       </div>
       <div class="form-row">
-        <label for="interest">What are you interested in?</label>
+        <label for="interest">What are you interested in? <span class="req-mark" aria-hidden="true">*</span></label>
         <select id="interest" name="interest" required>
           <option value="">Select one</option>
           <option value="Production & Media">Production &amp; Media</option>
           <option value="Cultural Collaboration">Cultural Collaboration</option>
           <option value="Strategic Communications">Strategic Communications</option>
-          <option value="Speaking">Speaking</option>
-          <option value="Partnership">Partnership</option>
+          <option value="International Production">International Production</option>
+          <option value="Speaking & Partnerships">Speaking &amp; Partnerships</option>
           <option value="Other">Other</option>
         </select>
       </div>
       <div class="form-row">
-        <label for="message">Message</label>
-        <textarea id="message" name="message" required></textarea>
+        <label for="message">Message <span class="req-mark" aria-hidden="true">*</span></label>
+        <textarea id="message" name="message" rows="7" required></textarea>
       </div>
-      <button type="submit" class="btn btn-ghost-dark">Send message →</button>
-      <p class="form-note">This opens your email app with the details filled in, addressed to Osamah's team. A direct backend integration can be added once a form service is connected.</p>
+
+      <!-- Honeypot: hidden from sighted users and screen readers alike; real visitors never fill this in. -->
+      <div class="hp-field" aria-hidden="true">
+        <label for="company">Leave this field blank</label>
+        <input type="text" id="company" name="company" tabindex="-1" autocomplete="off">
+      </div>
+      <input type="hidden" name="loadedAt" value="">
+
+      <button type="submit" class="btn btn-ghost-dark">Send Message →</button>
     </form>
+
+    <div class="form-success" id="formSuccess" tabindex="-1" hidden>
+      <h3>Message sent.</h3>
+      <p>Thank you for getting in touch. Your message has been received and we'll be in contact soon.</p>
+      <button type="button" class="btn btn-ghost-dark" id="sendAnother">Send another message</button>
+    </div>
   </div>
 </section>
 

@@ -1,0 +1,9 @@
+{
+  "name": "osamah-mousa-portfolio",
+  "private": true,
+  "version": "1.0.0",
+  "description": "Static site with a single Vercel serverless function for the contact form.",
+  "engines": {
+    "node": "20.x"
+  }
+}

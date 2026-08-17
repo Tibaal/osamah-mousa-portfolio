@@ -66,27 +66,94 @@ if (countEls.length) {
   countEls.forEach(el => countIo.observe(el));
 }
 
-// Contact form -> mailto (no backend configured yet)
+// Contact form -> /api/contact (Vercel serverless function, sends via Resend)
 const contactForm = document.getElementById('contactForm');
 if (contactForm) {
-  contactForm.addEventListener('submit', (e) => {
+  const submitBtn = contactForm.querySelector('button[type="submit"]');
+  const submitBtnDefaultText = submitBtn.textContent;
+  const formStatus = document.getElementById('formStatus');
+  const formSuccess = document.getElementById('formSuccess');
+  const sendAnotherBtn = document.getElementById('sendAnother');
+  const loadedAtInput = contactForm.querySelector('input[name="loadedAt"]');
+  const genericErrorMessage = "Something went wrong. We couldn't send your message. Please try again or contact us directly by email.";
+
+  if (loadedAtInput) loadedAtInput.value = String(Date.now());
+
+  let isSubmitting = false;
+
+  function setStatus(message, state) {
+    if (!formStatus) return;
+    formStatus.textContent = message || '';
+    if (state) formStatus.setAttribute('data-state', state);
+    else formStatus.removeAttribute('data-state');
+  }
+
+  contactForm.addEventListener('submit', async (e) => {
     e.preventDefault();
+    if (isSubmitting) return;
+    if (!contactForm.reportValidity()) return;
+
+    isSubmitting = true;
+    submitBtn.disabled = true;
+    submitBtn.textContent = 'Sending…';
+    setStatus('Sending your message…');
+
     const data = new FormData(contactForm);
-    const name = (data.get('name') || '').toString();
-    const org = (data.get('organization') || '').toString();
-    const email = (data.get('email') || '').toString();
-    const interest = (data.get('interest') || '').toString();
-    const message = (data.get('message') || '').toString();
-    const subject = `Website inquiry: ${interest || 'General'} — ${name}`;
-    const bodyLines = [
-      `Name: ${name}`,
-      org ? `Organization: ${org}` : null,
-      `Email: ${email}`,
-      `Interest: ${interest}`,
-      '',
-      message
-    ].filter(Boolean);
-    const mailto = `mailto:osamaalzedy@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(bodyLines.join('\n'))}`;
-    window.location.href = mailto;
+    const payload = {
+      name: (data.get('name') || '').toString().trim(),
+      email: (data.get('email') || '').toString().trim(),
+      organization: (data.get('organization') || '').toString().trim(),
+      interest: (data.get('interest') || '').toString().trim(),
+      message: (data.get('message') || '').toString().trim(),
+      company: (data.get('company') || '').toString(), // honeypot
+      loadedAt: Number(data.get('loadedAt')) || 0
+    };
+
+    try {
+      const res = await fetch('/api/contact', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload)
+      });
+      const result = await res.json().catch(() => ({}));
+
+      if (res.ok && result.ok) {
+        setStatus('');
+        contactForm.hidden = true;
+        if (formSuccess) {
+          formSuccess.hidden = false;
+          formSuccess.focus();
+        }
+      } else {
+        setStatus(result.error || genericErrorMessage, 'error');
+      }
+    } catch (err) {
+      setStatus(genericErrorMessage, 'error');
+    } finally {
+      isSubmitting = false;
+      submitBtn.disabled = false;
+      submitBtn.textContent = submitBtnDefaultText;
+    }
+  });
+
+  if (sendAnotherBtn) {
+    sendAnotherBtn.addEventListener('click', () => {
+      contactForm.reset();
+      if (loadedAtInput) loadedAtInput.value = String(Date.now());
+      formSuccess.hidden = true;
+      contactForm.hidden = false;
+      setStatus('');
+      const nameField = document.getElementById('name');
+      if (nameField) nameField.focus();
+    });
+  }
+}
+
+// "Start a conversation" links land on #contact-form-section — move focus to
+// the first field for keyboard/screen-reader users, not just visual scroll.
+if (window.location.hash === '#contact-form-section') {
+  window.addEventListener('load', () => {
+    const nameField = document.getElementById('name');
+    if (nameField) nameField.focus({ preventScroll: true });
   });
 }

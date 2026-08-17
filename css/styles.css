@@ -965,6 +965,34 @@ footer{background:var(--night); color:#E9E2CC; padding:96px 0 48px; scroll-margi
   background:rgba(212,174,92,0.08);
 }
 
+/* .contact-links is normally on the dark footer, where near-white text/borders
+   are correct. #direct-contact places the same markup on the light paper
+   section, so it needs its own readable default/hover/active/focus treatment
+   using the same tokens rather than the dark-footer values. */
+#direct-contact .contact-social a{opacity:1;}
+#direct-contact .contact-links a{
+  color:var(--ink);
+  border-color:var(--line);
+  background:transparent;
+}
+#direct-contact .contact-links a:hover{
+  color:var(--river-deep);
+  border-color:var(--river-deep);
+  background:rgba(22,58,102,0.05);
+}
+#direct-contact .contact-links a:active{
+  color:var(--night);
+  border-color:var(--gold);
+  background:rgba(156,122,46,0.12);
+}
+#direct-contact .contact-links a:focus-visible{
+  color:var(--river-deep);
+  border-color:var(--river-deep);
+  background:rgba(22,58,102,0.05);
+  outline:2px solid var(--river-deep);
+  outline-offset:2px;
+}
+
 /* fade-in on scroll: progressive enhancement, visible by default */
 .reveal{opacity:1; transform:none;}
 html.js-ready .reveal{
